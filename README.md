@@ -1,2 +1,1 @@
-# random-py-codes
-random-py-codes
+This repo has codes for product catalog search system powered by Amazon Bedrock Agents. The code here involves - 1/ dynamodb table creation 2/ adding a new category 3/ deleting a category 4/ getting category. Also schema files are included to invoke these functions. 

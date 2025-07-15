@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Product Categories API",
+    "description": "API for retrieving product categories from DynamoDB",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/categories": {
+      "get": {
+        "summary": "Get all product categories",
+        "description": "Retrieves all product categories from the DynamoDB table",
+        "operationId": "getAllCategories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Main category name"
+          },
+          "subcategory": {
+            "type": "string",
+            "description": "Subcategory name or path"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the category"
+          },
+          "level": {
+            "type": "integer",
+            "description": "Hierarchy level (0=main, 1=first level subcategory, etc.)"
+          }
+        }
+      },
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Total number of items returned"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          }
+        }
+      },
+      "CategoriesResponse": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Total number of items returned"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  }
+}

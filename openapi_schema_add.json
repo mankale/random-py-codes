@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Product Categories API",
+    "description": "API for managing product categories in the ProductCategories DynamoDB table",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/addcategory": {
+      "post": {
+        "summary": "Add a new category or subcategory",
+        "description": "Adds a new main category or subcategory to the ProductCategories table. If adding a subcategory, the parent category must already exist.",
+        "operationId": "addCategory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "category",
+                  "description"
+                ],
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "description": "Main category name (lowercase)"
+                  },
+                  "subcategory": {
+                    "type": "string",
+                    "description": "Subcategory name (lowercase). If adding a main category, leave this field empty. For deeper subcategories, use colon-separated format."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the category or subcategory"
+                  },
+                  "level": {
+                    "type": "integer",
+                    "description": "Hierarchy level of the category. 1 for main categories, 2+ for subcategories."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "category": {
+                          "type": "string"
+                        },
+                        "subcategory": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "level": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
